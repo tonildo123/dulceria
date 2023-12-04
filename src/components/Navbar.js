@@ -67,7 +67,7 @@ function ResponsiveAppBar() {
                         variant="h6"
                         noWrap
                         component={NavLink}
-                        to={logged ? "/home" : "/"}
+                        to={logged ? "/" : "/"}
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },

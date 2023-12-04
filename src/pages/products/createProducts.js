@@ -4,9 +4,12 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { db, uploadFile } from '../../firebase';
 import { collection, addDoc } from 'firebase/firestore';
+import { productArraySuccess } from '../../state/ArrayProductSlice';
+import { useDispatch } from 'react-redux';
 
 const CreateProducts = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [productName, setProductName] = useState('');
     const [productPrice, setProductPrice] = useState('');
     const [productStock, setProductStock] = useState('');
@@ -75,13 +78,21 @@ const CreateProducts = () => {
                 precio: productPrice,
                 stock: productStock
             });
+            const pet = {
+                urlimagen: url,
+                descripcion: productName,
+                precio: productPrice,
+                stock: productStock
+            }
+
+            dispatch(productArraySuccess(pet))
 
             const base64Image = await convertImageToBase64(productImage);
             // Obtener el array de productos del localStorage
             const productsInLocalStorage = JSON.parse(localStorage.getItem('products')) || [];
             // Agregar el nuevo producto al array
 
-            
+
             productsInLocalStorage.push({
                 id: docRef.id, // Puedes usar el ID del documento como identificador único
                 urlimagen: url,

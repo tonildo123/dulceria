@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useSelector } from 'react-redux';
 import RoutesPrivate from './RoutesPrivate';
 import RoutesPublic from './RoutesPublic';

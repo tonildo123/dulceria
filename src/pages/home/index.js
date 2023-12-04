@@ -1,12 +1,11 @@
 /* eslint-disable */
 import { useEffect, useState } from 'react';
-import { Button, Typography, Grid, Card, CardContent, CardMedia, CardActions, Box } from '@mui/material';
+import { Typography, Grid, Card, CardContent, CardMedia } from '@mui/material';
 import { collection, getDocs, } from 'firebase/firestore';
 import { db } from '../../firebase';
 import WelcomeComponent from '../../components/welcomeComponent';
 import { useSelector, useDispatch } from 'react-redux';
 import { productArraySuccess } from '../../state/ArrayProductSlice';
-import ModalDescription from '../../components/ModalDescription';
 
 
 const Home = () => {
@@ -15,8 +14,6 @@ const Home = () => {
   const productsCollection = collection(db, "Products");
   const dispatch = useDispatch();
   const state = useSelector(state => state)
-
-  const altura = { xs: "260px", sm: "300px" }
 
   const getPets = async () => {
 
@@ -62,7 +59,8 @@ const Home = () => {
           <CardMedia
             component="img"
             alt="Card Image"
-            image={card.urlimagen} />
+            image={card.urlimagen}
+            sx={{width:'100%', height:{sx:'150px', sm:'250px'}}} />
           <CardContent>
             <Typography variant="body2" sx={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
               {card.descripcion.toUpperCase()}
