@@ -6,10 +6,12 @@ import TermsAndConditions from "../pages/terminos_y_condiciones";
 import Layout from "../components/LayoutComponent";
 import Nosotros from "../pages/nosostros";
 import Contacto from "../pages/contact";
+import Inicio from "../pages/inicio/inicio";
 
 const RoutesPublic = () => (
     <Layout>
         <Routes>
+            <Route path='' element={<Inicio />} />
             <Route path='login' element={<Login />} />
             <Route path='nosotros' element={<Nosotros />} />
             <Route path='contacto' element={<Contacto />} />

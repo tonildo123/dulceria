@@ -1,5 +1,5 @@
 
-import { Button, Paper, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 
 const WelcomeComponent = () => {
     return (
@@ -10,7 +10,6 @@ const WelcomeComponent = () => {
             <Typography variant="h4" gutterBottom>
                 a Dulceria
             </Typography>
-            <Button>Empezar</Button>
         </Paper>
     )
 }

@@ -7,14 +7,22 @@ import Layout from "../components/LayoutComponent";
 import MisMascotas from "../pages/pets";
 import EditPet from "../pages/pets/EditPet";
 import Contacto from "../pages/contact";
+import Inicio from "../pages/inicio/inicio";
+import CreateProducts from "../pages/products/createProducts";
+import ShowProducts from "../pages/products/showProducts";
+import EditProducts from "../pages/products/EditProducts";
 
 const RoutesPrivate = () => (
     <Layout>
         <Routes>
+            <Route path='/' element={<Inicio />} />
             <Route path='/home' element={<Home />} />
             <Route path='/pets/create' element={<Create />} />
             <Route path='/pets/mis-mascotas' element={<MisMascotas />} />
             <Route path='/pets/mis-mascotas/edit' element={<EditPet />} />
+            <Route path='/product/create' element={<CreateProducts />} />
+            <Route path='/product/show/admin' element={<ShowProducts />} />
+            <Route path='/product/edit' element={<EditProducts />} />
             <Route path='/profile/edit' element={<Profile />} />
             <Route path='/nosotros' element={<Nosotros />} />
             <Route path='/contacto' element={<Contacto />} />

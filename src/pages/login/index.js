@@ -73,7 +73,7 @@ const Login = () => {
                     color="secondary"
                     sx={{ marginTop: 2, backgroundColor: 'white', color: '#A04000 ' }}
                     component={NavLink}
-                    to="/forgotpassword"
+                    to="/register"
                 >
                     Crear cuenta
                 </Button>

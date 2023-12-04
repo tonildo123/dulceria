@@ -25,8 +25,6 @@ const Contacto = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log('Formulario enviado:', formData);
-
         try {
 
             const contactCollection = collection(db, 'Contact');

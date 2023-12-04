@@ -4,6 +4,7 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Cookie from '@mui/icons-material/Cookie';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -20,13 +21,18 @@ import { profileClean } from '../state/Profileslice';
 import { petArrayClean } from '../state/ArrayPetSlice';
 
 
-const menuDrawerUnlogged = [{ 'label': 'Inicio', 'ruta': '/' }, { 'label': 'Productos', 'ruta': '/products' },
-{ 'label': 'Contacto', 'ruta': '/contacto' }, { 'label': 'Nosotros', 'ruta': '/nosotros' }];
+const menuDrawerUnlogged = [
+    { 'label': 'Inicio', 'ruta': '/' },
+    { 'label': 'Productos', 'ruta': '/products' },
+    { 'label': 'Contacto', 'ruta': '/contacto' },
+    { 'label': 'Nosotros', 'ruta': '/nosotros' }];
 
-const menuDrawerLogged = [{ 'label': 'Inicio', 'ruta': '/home' },
-{ 'label': 'Mis mascotas', 'ruta': "/pets/create" },
-{ 'label': 'Productos', 'ruta': '/products' },
-{ 'label': 'Contacto', 'ruta': '/contacto' }, { 'label': 'Nosotros', 'ruta': '/nosotros' }];
+const menuDrawerLogged = [
+    { 'label': 'Inicio', 'ruta': '/product/show/admin' },
+    { 'label': 'Dulceria', 'ruta': "/product/show/admin" },
+    { 'label': 'Productos', 'ruta': '/product/create' },
+    { 'label': 'Contacto', 'ruta': '/contacto' },
+    { 'label': 'Nosotros', 'ruta': '/nosotros' }];
 
 function ResponsiveAppBar() {
 
@@ -61,7 +67,7 @@ function ResponsiveAppBar() {
                         variant="h6"
                         noWrap
                         component={NavLink}
-                        to={logged ? "/home" : "/login"}
+                        to={logged ? "/home" : "/"}
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -122,10 +128,10 @@ function ResponsiveAppBar() {
                     </Box>
                     <Cookie sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                     <Typography
-                        variant="h5"
+                        variant="h6"
                         noWrap
                         component={NavLink}
-                        to={logged ? "/home" : "/login"}
+                        to={logged ? "/" : "/login"}
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -145,7 +151,7 @@ function ResponsiveAppBar() {
                             <Button
                                 variant="text"
                                 component={NavLink}
-                                to="/pets/create"
+                                to= "/home"
                                 sx={{ pt: 1 }}
                             >
                                 Inicio
@@ -153,7 +159,7 @@ function ResponsiveAppBar() {
                             <Button
                                 variant="text"
                                 component={NavLink}
-                                to="/products"
+                                to="/product/create"
                                 sx={{ pt: 1 }}
                             >
                                 Productos
@@ -220,7 +226,7 @@ function ResponsiveAppBar() {
                                     onClick={Salir}
                                     sx={{ pt: 1 }}
                                 >
-                                    <AccountCircleIcon sx={{ color: '#E74C3C' }} />
+                                    <LogoutIcon sx={{ color: '#E74C3C' }} />
                                 </Button> :
                                 <Button
                                     variant="text"
