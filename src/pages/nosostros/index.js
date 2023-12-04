@@ -37,7 +37,7 @@ const Nosotros = () => {
 
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100%', justifyContent: 'space-evenly' }}>
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent:'center' }}>
           <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
             Visión
           </Typography>
