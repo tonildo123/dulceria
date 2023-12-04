@@ -21,11 +21,12 @@ import { petArrayClean } from '../state/ArrayPetSlice';
 
 
 const menuDrawerUnlogged = [{ 'label': 'Inicio', 'ruta': '/' }, { 'label': 'Productos', 'ruta': '/products' },
-{ 'label': 'Contacto', 'ruta': '/contact' }, { 'label': 'Nosotros', 'ruta': '/nosotros' }];
+{ 'label': 'Contacto', 'ruta': '/contacto' }, { 'label': 'Nosotros', 'ruta': '/nosotros' }];
 
 const menuDrawerLogged = [{ 'label': 'Inicio', 'ruta': '/home' },
 { 'label': 'Mis mascotas', 'ruta': "/pets/create" },
-{ 'label': 'Cambiar contraseña', 'ruta': '/profile/password' }];
+{ 'label': 'Productos', 'ruta': '/products' },
+{ 'label': 'Contacto', 'ruta': '/contacto' }, { 'label': 'Nosotros', 'ruta': '/nosotros' }];
 
 function ResponsiveAppBar() {
 
@@ -147,7 +148,31 @@ function ResponsiveAppBar() {
                                 to="/pets/create"
                                 sx={{ pt: 1 }}
                             >
-                                Dulceria
+                                Inicio
+                            </Button>
+                            <Button
+                                variant="text"
+                                component={NavLink}
+                                to="/products"
+                                sx={{ pt: 1 }}
+                            >
+                                Productos
+                            </Button>
+                            <Button
+                                variant="text"
+                                component={NavLink}
+                                to="/nosotros"
+                                sx={{ pt: 1 }}
+                            >
+                                Nosotros
+                            </Button>
+                            <Button
+                                variant="text"
+                                component={NavLink}
+                                to="/contacto"
+                                sx={{ pt: 1 }}
+                            >
+                                Contacto
                             </Button>
                         </Box>
                         : <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
@@ -178,7 +203,7 @@ function ResponsiveAppBar() {
                             <Button
                                 variant="text"
                                 component={NavLink}
-                                to="/contact"
+                                to="/contacto"
                                 sx={{ pt: 1 }}
                             >
                                 Contacto
@@ -186,14 +211,27 @@ function ResponsiveAppBar() {
 
                         </Box>}
                     <Box>
-                        <Button
-                            variant="text"
-                            component={NavLink}
-                            to="/login"
-                            sx={{ pt: 1 }}
-                        >
-                            <AccountCircleIcon sx={{ color: '#E74C3C' }} />
-                        </Button>
+                        {
+                            logged
+                                ?
+                                <Button
+                                    variant="text"
+                                    component={NavLink}
+                                    onClick={Salir}
+                                    sx={{ pt: 1 }}
+                                >
+                                    <AccountCircleIcon sx={{ color: '#E74C3C' }} />
+                                </Button> :
+                                <Button
+                                    variant="text"
+                                    component={NavLink}
+                                    to="/login"
+                                    sx={{ pt: 1 }}
+                                >
+                                    <AccountCircleIcon sx={{ color: '#E74C3C' }} />
+                                </Button>
+                        }
+
                     </Box>
                 </Toolbar>
             </Container>

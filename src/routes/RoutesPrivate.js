@@ -6,6 +6,7 @@ import Nosotros from "../pages/nosostros";
 import Layout from "../components/LayoutComponent";
 import MisMascotas from "../pages/pets";
 import EditPet from "../pages/pets/EditPet";
+import Contacto from "../pages/contact";
 
 const RoutesPrivate = () => (
     <Layout>
@@ -16,6 +17,7 @@ const RoutesPrivate = () => (
             <Route path='/pets/mis-mascotas/edit' element={<EditPet />} />
             <Route path='/profile/edit' element={<Profile />} />
             <Route path='/nosotros' element={<Nosotros />} />
+            <Route path='/contacto' element={<Contacto />} />
             <Route path='*' element={<Navigate to='/home' replace />} />
         </Routes>
     </Layout>
