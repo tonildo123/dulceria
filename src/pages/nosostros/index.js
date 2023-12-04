@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react'
 import { Box, Typography, Grid } from '@mui/material';
 import nosotrosImage from '../../assets/nosotros.PNG';
