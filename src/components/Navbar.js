@@ -18,12 +18,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import { unlogger } from '../state/LoginSlice';
 import { profileClean } from '../state/Profileslice';
-import { petArrayClean } from '../state/ArrayPetSlice';
 
 
 const menuDrawerUnlogged = [
     { 'label': 'Inicio', 'ruta': '/' },
-    { 'label': 'Productos', 'ruta': '/products' },
+    { 'label': 'Productos', 'ruta': '/productos' },
     { 'label': 'Contacto', 'ruta': '/contacto' },
     { 'label': 'Nosotros', 'ruta': '/nosotros' }];
 
@@ -41,7 +40,6 @@ function ResponsiveAppBar() {
     const { logged } = useSelector(state => state.logger.user)
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -55,7 +53,7 @@ function ResponsiveAppBar() {
     const Salir = () => {
         dispatch(unlogger())
         dispatch(profileClean())
-        dispatch(petArrayClean())
+        sessionStorage.clear();
     };
 
     return (
@@ -151,7 +149,7 @@ function ResponsiveAppBar() {
                             <Button
                                 variant="text"
                                 component={NavLink}
-                                to= "/home"
+                                to="/home"
                                 sx={{ pt: 1 }}
                             >
                                 Inicio
@@ -193,7 +191,7 @@ function ResponsiveAppBar() {
                             <Button
                                 variant="text"
                                 component={NavLink}
-                                to="/products"
+                                to="/productos"
                                 sx={{ pt: 1 }}
                             >
                                 Productos

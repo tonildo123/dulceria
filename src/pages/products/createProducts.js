@@ -88,13 +88,11 @@ const CreateProducts = () => {
             dispatch(productArraySuccess(pet))
 
             const base64Image = await convertImageToBase64(productImage);
-            // Obtener el array de productos del localStorage
             const productsInLocalStorage = JSON.parse(localStorage.getItem('products')) || [];
-            // Agregar el nuevo producto al array
 
 
             productsInLocalStorage.push({
-                id: docRef.id, // Puedes usar el ID del documento como identificador único
+                id: docRef.id,
                 urlimagen: url,
                 descripcion: productName,
                 precio: productPrice,
@@ -102,7 +100,6 @@ const CreateProducts = () => {
                 base64Image: base64Image
             });
 
-            // Guardar el array actualizado en el localStorage
             localStorage.setItem('products', JSON.stringify(productsInLocalStorage));
 
 

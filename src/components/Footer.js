@@ -34,7 +34,7 @@ const Footer = () => {
                             <Typography variant="body2" sx={{ color: textColor }}>Productos</Typography>
                             <Typography variant="body2" sx={{ color: textColor }}>Como comprar</Typography>
                             <Typography variant="body2" sx={{ color: textColor }}>Descuentos</Typography>
-                            <Typography variant="body2" sx={{ color: textColor }}>MAyoreo</Typography>
+                            <Typography variant="body2" sx={{ color: textColor }}>Mayoreo</Typography>
                         </Grid>
                         <Grid item xs={12} sm={3}>
                             <Typography variant="h6" sx={{ color: textColor }}>

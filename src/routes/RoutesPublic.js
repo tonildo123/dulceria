@@ -7,6 +7,7 @@ import Layout from "../components/LayoutComponent";
 import Nosotros from "../pages/nosostros";
 import Contacto from "../pages/contact";
 import Inicio from "../pages/inicio/inicio";
+import ShowproductsPublic from "../pages/products/showproductsPublic";
 
 const RoutesPublic = () => (
     <Layout>
@@ -16,6 +17,7 @@ const RoutesPublic = () => (
             <Route path='nosotros' element={<Nosotros />} />
             <Route path='contacto' element={<Contacto />} />
             <Route path='register' element={<Register />} />
+            <Route path='productos' element={<ShowproductsPublic />} />
             <Route path='forgotpassword' element={<ForgotPassword />} />
             <Route path='termsandconditions' element={<TermsAndConditions />} />
             <Route path='*' element={<Navigate to='/login' replace />} />
