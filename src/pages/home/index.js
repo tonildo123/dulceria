@@ -1,15 +1,17 @@
 /* eslint-disable */
 import { useEffect, useState } from 'react';
-import { Typography, Grid, Card, CardContent, CardMedia, Box } from '@mui/material';
+import { Typography, Grid, Card, CardContent, CardMedia, Box, Button } from '@mui/material';
 import { collection, getDocs, } from 'firebase/firestore';
 import { db } from '../../firebase';
 import WelcomeComponent from '../../components/welcomeComponent';
 import { useSelector, useDispatch } from 'react-redux';
 import { productArrayClean, productArraySuccess } from '../../state/ArrayProductSlice';
 import useOffline from '../../hooks/useOffline';
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-
+  
+  const navigate = useNavigate();
   const [pets, setPets] = useState([]);
   const [base64Image, setBase64Image] = useState(null);
   const productsCollection = collection(db, "Products");
@@ -59,7 +61,7 @@ const Home = () => {
         if (!isPetAlreadyAdded) {
 
           dispatch(productArraySuccess(pet));
-          
+
           // convertImageToBase64(pets[i].urlimagen);
           // const productsInLocalStorage = JSON.parse(localStorage.getItem('products')) || [];
           // productsInLocalStorage.push({
@@ -83,20 +85,22 @@ const Home = () => {
   const renderCard = (card, index) => {
     return (
       <Grid item key={card.id} sx={{ width: { sx: '100%', sm: '200px', height: { sx: '200px', sm: '300px' } } }}>
-        <Card sx={{ my: '2px' }} >
-          <CardMedia
-            component="img"
-            alt="Card Image"
-            image={card.urlimagen}
-            sx={{ width: '100%', height: { sx: '150px', sm: '250px' } }} />
-          <CardContent>
-            <Typography variant="body2" sx={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
-              {card.descripcion.toUpperCase()}
-            </Typography>
-            <Typography variant="body2" sx={{ whiteSpace: 'nowrap', fontWeight: 'bold', color: 'red' }}>$ {card.precio}</Typography>
-            <Typography variant="body2" sx={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>{card.stock} unidades</Typography>
-          </CardContent>
-        </Card>
+        <Button onClick={() => navigate(`/detalles`, { state: { card } })}>
+          <Card sx={{ my: '2px' }} >
+            <CardMedia
+              component="img"
+              alt="Card Image"
+              image={card.urlimagen}
+              sx={{ width: '100%', height: { sx: '150px', sm: '250px' } }} />
+            <CardContent>
+              <Typography variant="body2" sx={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
+                {card.descripcion.toUpperCase()}
+              </Typography>
+              <Typography variant="body2" sx={{ whiteSpace: 'nowrap', fontWeight: 'bold', color: 'red' }}>$ {card.precio}</Typography>
+              <Typography variant="body2" sx={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>{card.stock} unidades</Typography>
+            </CardContent>
+          </Card>
+        </Button>
       </Grid>
     );
   };
@@ -109,7 +113,7 @@ const Home = () => {
       <Grid item xs={12} md={6} >
         {pets.length === 0
           ? null
-          : <Box sx={{ display: 'flex', width: '100%', justifyContent:'center' }}>
+          : <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
             <Typography variant="h5" sx={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
               Productos
             </Typography>

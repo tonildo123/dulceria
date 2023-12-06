@@ -11,6 +11,7 @@ import Inicio from "../pages/inicio/inicio";
 import CreateProducts from "../pages/products/createProducts";
 import ShowProducts from "../pages/products/showProducts";
 import EditProducts from "../pages/products/EditProducts";
+import Details from "../pages/Details/Details";
 
 const RoutesPrivate = () => (
     <Layout>
@@ -26,6 +27,7 @@ const RoutesPrivate = () => (
             <Route path='/profile/edit' element={<Profile />} />
             <Route path='/nosotros' element={<Nosotros />} />
             <Route path='/contacto' element={<Contacto />} />
+            <Route path='/detalles' element={<Details />} />
             <Route path='*' element={<Navigate to='/home' replace />} />
         </Routes>
     </Layout>

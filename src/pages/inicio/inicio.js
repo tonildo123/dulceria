@@ -1,12 +1,13 @@
 /* eslint-disable */
 import React from 'react'
 import { useEffect, useState } from 'react';
-import { Typography, Grid, Card, CardContent, CardMedia, Box, Container } from '@mui/material';
+import { Typography, Grid, Card, CardContent, CardMedia, Box, Container, Button } from '@mui/material';
 import { collection, getDocs, } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import { productArrayClean, productArraySuccess } from '../../state/ArrayProductSlice';
 import useOffline from '../../hooks/useOffline';
+import { useNavigate } from "react-router-dom";
 
 import slider from '../../assets/slider.PNG';
 
@@ -44,6 +45,7 @@ const Inicio = () => {
   const dispatch = useDispatch();
   const state = useSelector(state => state)
   const { CargarProductosOffline } = useOffline()
+  const navigate = useNavigate();
 
   const getPets = async () => {
 
@@ -112,6 +114,7 @@ const Inicio = () => {
   const renderCard = (card, index) => {
     return (
       <Grid item key={card.id} sx={{ width: { sx: '100%', sm: '260px', height: { sx: '200px', sm: '300px' } } }}>
+        <Button onClick={() => navigate(`/detalles`, { state: { card } })}>
         <Card sx={{ my: '2px' }} >
           <CardMedia
             component="img"
@@ -126,6 +129,7 @@ const Inicio = () => {
             <Typography variant="body2" sx={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>{card.stock} unidades</Typography>
           </CardContent>
         </Card>
+        </Button>
       </Grid>
     );
   };

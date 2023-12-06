@@ -27,8 +27,7 @@ const menuDrawerUnlogged = [
     { 'label': 'Nosotros', 'ruta': '/nosotros' }];
 
 const menuDrawerLogged = [
-    { 'label': 'Inicio', 'ruta': '/product/show/admin' },
-    { 'label': 'Dulceria', 'ruta': "/product/show/admin" },
+    { 'label': 'Inicio', 'ruta': '/' },
     { 'label': 'Productos', 'ruta': '/product/create' },
     { 'label': 'Contacto', 'ruta': '/contacto' },
     { 'label': 'Nosotros', 'ruta': '/nosotros' }];

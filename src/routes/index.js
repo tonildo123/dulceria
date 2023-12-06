@@ -4,11 +4,13 @@ import RoutesPrivate from './RoutesPrivate';
 import RoutesPublic from './RoutesPublic';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React, { useEffect } from 'react';
+import useFirebaseLogin from '../hooks/useFirebaseLogin';
 
 
 const RouterApp = () => {
 
     const { logged } = useSelector(state => state.logger.user);
+    const { handleLogin } = useFirebaseLogin()
    
 
     useEffect(() => {
