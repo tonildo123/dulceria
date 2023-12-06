@@ -113,7 +113,7 @@ const Inicio = () => {
 
   const renderCard = (card, index) => {
     return (
-      <Grid item key={card.id} sx={{ width: { sx: '100%', sm: '260px', height: { sx: '200px', sm: '300px' } } }}>
+      <Grid item xs={12} md={3} key={card.id} sx={{ width: { sx: '100%', sm: '260px', height: { sx: '200px', sm: '300px' } } }}>
         <Button onClick={() => navigate(`/detalles`, { state: { card } })}>
         <Card sx={{ my: '2px' }} >
           <CardMedia
