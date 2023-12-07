@@ -66,7 +66,7 @@ const Details = () => {
                             fullWidth
                             variant="contained"
                             endIcon={<ShoppingCart />}
-                            sx={{ borderRadius: '18px' }}>Agregar al carrito</Button>
+                            sx={{ borderRadius: '18px', mb:4 }}>Agregar al carrito</Button>
                     </Box>
                 </Grid>
             </Grid>
