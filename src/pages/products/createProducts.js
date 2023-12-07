@@ -35,19 +35,6 @@ const CreateProducts = () => {
         }
     };
 
-    const convertImageToBase64 = (image) => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                resolve(reader.result);
-            };
-            reader.onerror = (error) => {
-                reject(error);
-            };
-            reader.readAsDataURL(image);
-        });
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -78,30 +65,15 @@ const CreateProducts = () => {
                 precio: productPrice,
                 stock: productStock
             });
-            const pet = {
+            const product = {
+                id: docRef.id,
                 urlimagen: url,
                 descripcion: productName,
                 precio: productPrice,
                 stock: productStock
             }
 
-            dispatch(productArraySuccess(pet))
-
-            const base64Image = await convertImageToBase64(productImage);
-            const productsInLocalStorage = JSON.parse(localStorage.getItem('products')) || [];
-
-
-            productsInLocalStorage.push({
-                id: docRef.id,
-                urlimagen: url,
-                descripcion: productName,
-                precio: productPrice,
-                stock: productStock,
-                base64Image: base64Image
-            });
-
-            localStorage.setItem('products', JSON.stringify(productsInLocalStorage));
-
+            dispatch(productArraySuccess(product))          
 
             Swal.fire({
                 title: 'Producto guardado!',

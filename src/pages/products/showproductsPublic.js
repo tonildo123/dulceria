@@ -11,69 +11,41 @@ import { useNavigate } from "react-router-dom";
 
 const ShowproductsPublic = () => {
 
-  const [pets, setPets] = useState([]);
-  const [base64Image, setBase64Image] = useState(null);
+  const [products, setProducts] = useState([]);
   const productsCollection = collection(db, "Products");
   const dispatch = useDispatch();
   const state = useSelector(state => state)
   const { CargarProductosOffline } = useOffline()
   const navigate = useNavigate();
 
-  const getPets = async () => {
+  const getsProductos = async () => {
 
     if (state.userProductsArray.products.length > 0) {
-      setPets(state.userProductsArray.products)
+      setProducts(state.userProductsArray.products)
     } else {
       const data = await getDocs(productsCollection);
-      setPets(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     }
   }
 
-  const convertImageToBase64 = async (image) => {
-    const response = await fetch(image);
-    const blob = await response.blob();
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64data = reader.result;
-      setBase64Image(base64data);
-    };
-
-    reader.readAsDataURL(blob);
-  }
-
   useEffect(() => {
-    getPets();
-    if (pets.length > 0) {
-      for (let i = 0; i < pets.length; i++) {
-        const pet = {
-          id: pets[i].id,
-          descripcion: pets[i].descripcion,
-          precio: pets[i].precio,
-          urlimagen: pets[i].urlimagen,
-          stock: pets[i].stock,
+    getsProductos();
+    if (products.length > 0) {
+      for (let i = 0; i < products.length; i++) {
+        const product = {
+          id: products[i].id,
+          descripcion: products[i].descripcion,
+          precio: products[i].precio,
+          urlimagen: products[i].urlimagen,
+          stock: products[i].stock,
         };
 
-        const isPetAlreadyAdded = state.userProductsArray.products.some(
-          (existingPet) => existingPet.id === pet.id
+        const isProductAlreadyAdded = state.userProductsArray.products.some(
+          (existingProduct) => existingProduct.id === product.id
         );
 
-        if (!isPetAlreadyAdded) {
-          
-          dispatch(productArraySuccess(pet));
-
-          // convertImageToBase64(pets[i].urlimagen);
-          // const productsInLocalStorage = JSON.parse(localStorage.getItem('products')) || [];
-          // productsInLocalStorage.push({
-          //   id: pets[i].id,
-          //   descripcion: pets[i].descripcion,
-          //   precio: pets[i].precio,
-          //   urlimagen: pets[i].urlimagen,
-          //   stock: pets[i].stock,
-          //   base64Image: base64Image
-          // });
-
-          // localStorage.setItem('products', JSON.stringify(productsInLocalStorage));
+        if (!isProductAlreadyAdded) {          
+          dispatch(productArraySuccess(product));         
         }
       }
     } else {
@@ -81,7 +53,7 @@ const ShowproductsPublic = () => {
       CargarProductosOffline()
     }
 
-  }, [pets.length]);
+  }, [products.length]);
 
 
 
@@ -115,7 +87,7 @@ const ShowproductsPublic = () => {
       <Grid item xs={12} md={3} >
       </Grid>
       <Grid item xs={12} md={6} >
-        {pets.length === 0
+        {products.length === 0
           ? null
           : <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
             <Typography variant="h5" sx={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
@@ -123,7 +95,7 @@ const ShowproductsPublic = () => {
             </Typography>
           </Box>}
         <Grid container sx={{ justifyContent: 'space-evenly' }}>
-          {pets.length === 0 ? <WelcomeComponent /> : pets.map(renderCard)}
+          {products.length === 0 ? <WelcomeComponent /> : products.map(renderCard)}
         </Grid>
       </Grid>
       <Grid item xs={12} md={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

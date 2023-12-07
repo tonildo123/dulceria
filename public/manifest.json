@@ -16,10 +16,65 @@
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512"
+    },
+    {
+      "src": "divierte.PNG",
+      "type": "image/png",
+      "sizes": "200x300",
+      "descripcion": "Dviertete",
+      "stock": 62,
+      "precio": 600,
+      "id":1
+    },
+    {
+      "src": "minichupas.PNG",
+      "type": "image/png",
+      "sizes": "200x300",
+      "descripcion": "Mini chupas",
+      "stock": 9,
+      "precio": 181,
+      "id":2
+    },
+    {
+      "src": "paleta1.PNG",
+      "type": "image/png",
+      "sizes": "200x300",
+      "descripcion": "Paleta",
+      "stock": 5,
+      "precio": 100,
+      "id":3
+    },
+    {
+      "src": "paleta2.PNG",
+      "type": "image/png",
+      "sizes": "200x300",
+      "descripcion": "Paletas Vero",
+      "stock": 10,
+      "precio": 200,
+      "id":4
+    },
+    {
+      "src": "pinatero.PNG",
+      "type": "image/png",
+      "sizes": "200x300",
+      "descripcion": "Delipack Piñatero",
+      "stock": 15,
+      "precio": 139,
+      "id":5
+    },
+    {
+      "src": "producto2.PNG",
+      "type": "image/png",
+      "sizes": "200x300",
+      "descripcion": "Piñata mix",
+      "stock": 15,
+      "precio": 120,
+      "id":6
     }
   ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "offline_access": true
 }

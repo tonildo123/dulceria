@@ -7,7 +7,6 @@ initialState: {
 },
 reducers: {
     petArraySuccess: (state, action) => {
-        // Agrega la nueva mascota al array de mascotas del usuario
         state.pets.push({
           id: action.payload.id,
           idUser: action.payload.idUser,
