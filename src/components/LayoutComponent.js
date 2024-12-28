@@ -1,6 +1,5 @@
-import { Box} from '@mui/material';
+import { Box } from '@mui/material';
 import ResponsiveAppBar from './Navbar';
-import Footer from './Footer';
 
 
 const Layout = ({ children }) => {
@@ -10,7 +9,7 @@ const Layout = ({ children }) => {
     <Box>
       <ResponsiveAppBar />
       {children}
-      <Footer />
+      {/* <Footer /> */}
     </Box>
   );
 };

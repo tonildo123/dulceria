@@ -8,7 +8,7 @@ const WelcomeComponent = () => {
                 Bienvenido
             </Typography>
             <Typography variant="h4" gutterBottom>
-                a Dulceria
+                a Rogans
             </Typography>
         </Paper>
     )

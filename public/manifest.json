@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Rogans",
+  "name": "Rogans",
   "icons": [
     {
       "src": "favicon.ico",
@@ -24,7 +24,7 @@
       "descripcion": "Dviertete",
       "stock": 62,
       "precio": 600,
-      "id":1
+      "id": 1
     },
     {
       "src": "minichupas.PNG",
@@ -33,7 +33,7 @@
       "descripcion": "Mini chupas",
       "stock": 9,
       "precio": 181,
-      "id":2
+      "id": 2
     },
     {
       "src": "paleta1.PNG",
@@ -42,7 +42,7 @@
       "descripcion": "Paleta",
       "stock": 5,
       "precio": 100,
-      "id":3
+      "id": 3
     },
     {
       "src": "paleta2.PNG",
@@ -51,7 +51,7 @@
       "descripcion": "Paletas Vero",
       "stock": 10,
       "precio": 200,
-      "id":4
+      "id": 4
     },
     {
       "src": "pinatero.PNG",
@@ -60,7 +60,7 @@
       "descripcion": "Delipack Piñatero",
       "stock": 15,
       "precio": 139,
-      "id":5
+      "id": 5
     },
     {
       "src": "producto2.PNG",
@@ -69,7 +69,7 @@
       "descripcion": "Piñata mix",
       "stock": 15,
       "precio": 120,
-      "id":6
+      "id": 6
     }
   ],
   "start_url": ".",

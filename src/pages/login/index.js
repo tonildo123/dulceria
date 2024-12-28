@@ -1,11 +1,9 @@
-import { useState } from 'react';
-import { TextField, Button, Typography, Grid } from '@mui/material';
+import { Button, Grid, TextField, Typography } from '@mui/material';
 import Alert from "@mui/material/Alert";
-import './style.css';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import useFirebaseLogin from '../../hooks/useFirebaseLogin';
-
-
+import './style.css';
 
 const Login = () => {
 
@@ -23,7 +21,7 @@ const Login = () => {
 
 
     return (
-        <Grid container xs={{ height: '500px', my: 5 }}>
+        <Grid container sx={{ height: '500px', my: 5 }}>
             <Grid item xs={12} sm={4} className="hidden sm:block">
             </Grid>
             <Grid item xs={12} sm={4} sx={{ background: 'white', my: '4%' }}>
@@ -33,7 +31,7 @@ const Login = () => {
                     </Alert>
                 )}
 
-                <Typography variant="h4" gutterBottom>
+                <Typography variant="h4" gutterBottom align='center'>
                     Iniciar Sesión
                 </Typography>
                 <form>

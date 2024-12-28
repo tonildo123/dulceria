@@ -1,20 +1,20 @@
 /* eslint-disable */
 
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Cookie from '@mui/icons-material/Cookie';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Cookie from '@mui/icons-material/Cookie';
 import LogoutIcon from '@mui/icons-material/Logout';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useSelector, useDispatch } from 'react-redux';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import { unlogger } from '../state/LoginSlice';
 import { profileClean } from '../state/Profileslice';
@@ -22,15 +22,13 @@ import { profileClean } from '../state/Profileslice';
 
 const menuDrawerUnlogged = [
     { 'label': 'Inicio', 'ruta': '/' },
-    { 'label': 'Productos', 'ruta': '/productos' },
-    { 'label': 'Contacto', 'ruta': '/contacto' },
-    { 'label': 'Nosotros', 'ruta': '/nosotros' }];
+    { 'label': 'Iniciar sesion', 'ruta': '/login' },
+    { 'label': 'Registrarme', 'ruta': '/register' }];
 
 const menuDrawerLogged = [
     { 'label': 'Inicio', 'ruta': '/' },
-    { 'label': 'Productos', 'ruta': '/product/create' },
-    { 'label': 'Contacto', 'ruta': '/contacto' },
-    { 'label': 'Nosotros', 'ruta': '/nosotros' }];
+    { 'label': 'Mi Casa', 'ruta': '/my-home' },
+    { 'label': 'Mi Perfil', 'ruta': '/my-profile' }];
 
 function ResponsiveAppBar() {
 
@@ -75,7 +73,7 @@ function ResponsiveAppBar() {
                             textDecoration: 'none',
                         }}
                     >
-                        Dulceria
+                        Rogans
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
@@ -140,7 +138,7 @@ function ResponsiveAppBar() {
                             textDecoration: 'none',
                         }}
                     >
-                        Dulceria
+                        Rogans
                     </Typography>{/**mobile */}
                     {/**desde aqui web */}
                     {logged

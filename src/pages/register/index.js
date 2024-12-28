@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-import { TextField, Button, Typography, Grid } from '@mui/material';
+import { Button, Grid, TextField, Typography } from '@mui/material';
 import Alert from "@mui/material/Alert";
-import './style.css';
+import React, { useState } from 'react';
 import useFirebaseRegister from '../../hooks/useFirebaseRegister';
+import './style.css';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repassword, setRepassword] = useState('');
-  const [nombre, setNombre] = useState('');
-  const [apellidoPaterno, setApellidoPaterno] = useState('');
-  const [apellidoMaterno, setApellidoMaterno] = useState('');
+ 
 
   const { handleRegister, error, setError } = useFirebaseRegister();
 
@@ -26,20 +24,9 @@ const Register = () => {
     setRepassword(event.target.value);
   };
 
-  const handleNombreChange = (event) => {
-    setNombre(event.target.value);
-  };
-
-  const handleApellidoPaternoChange = (event) => {
-    setApellidoPaterno(event.target.value);
-  };
-
-  const handleApellidoMaternoChange = (event) => {
-    setApellidoMaterno(event.target.value);
-  };
 
   return (
-    <Grid container xs={{ height: '500px', my: 5 }}>
+    <Grid container sx={{ height: '500px', my: 5 }}>
       <Grid item xs={12} sm={4} className="hidden sm:block">
       </Grid>
       <Grid item xs={12} sm={4} sx={{ background: 'white', my: '4%' }}>
@@ -48,41 +35,10 @@ const Register = () => {
             {error}
           </Alert>
         )}
-
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" gutterBottom align="center">
           Registrarse
         </Typography>
         <form>
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Nombre"
-            variant="outlined"
-            type="text"
-            placeholder="Ingresa tu nombre"
-            value={nombre}
-            onChange={handleNombreChange}
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Apellido Paterno"
-            variant="outlined"
-            type="text"
-            placeholder="Ingresa tu apellido paterno"
-            value={apellidoPaterno}
-            onChange={handleApellidoPaternoChange}
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Apellido Materno"
-            variant="outlined"
-            type="text"
-            placeholder="Ingresa tu apellido materno"
-            value={apellidoMaterno}
-            onChange={handleApellidoMaternoChange}
-          />
           <TextField
             fullWidth
             margin="normal"
@@ -118,7 +74,7 @@ const Register = () => {
             variant="contained"
             color="primary"
             sx={{ marginTop: 2, backgroundColor: '#E74C3C' }}
-            onClick={() => handleRegister(email, password, repassword, nombre, apellidoPaterno, apellidoMaterno)}
+            onClick={() => handleRegister(email, password, repassword)}
           >
             Registrarme
           </Button>

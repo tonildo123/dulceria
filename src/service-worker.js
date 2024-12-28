@@ -1,6 +1,6 @@
 // service-worker.js
 
-const CACHE_NAME = 'dulceria-cache';
+const CACHE_NAME = 'rogans-cache';
 const urlsToCache = [
   '/',
   '/index.html',
