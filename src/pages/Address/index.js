@@ -1,6 +1,7 @@
 import { Box, Button, CircularProgress, Grid, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import MapComponent from '../../components/MapComponent';
 import { uploadFile } from '../../firebase';
 import useAddress from '../../hooks/useAddress';
 
@@ -194,6 +195,14 @@ const Address = () => {
                 >
                   Obtener Ubicación
                 </Button>
+                {formData.latitude && (
+                  <Box sx={{ mt: 2, textAlign: 'center' }}>
+                    <Typography variant="body2" sx={{ mb: 1 }}>
+                      Vista previa de la mapa:
+                    </Typography>
+                    <MapComponent />
+                  </Box>
+                )}
               </Grid>
               <Grid item xs={12}>
                 <Button

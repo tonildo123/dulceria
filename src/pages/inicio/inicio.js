@@ -12,8 +12,6 @@ const Inicio = () => {
   const {getAddress} = useAddress()
   const state = useSelector(state => state)
   const {user} = state.logger;
-  console.log("inicio state", JSON.stringify(state, null, 5)) 
-  console.log('inicio role', process.env.REACT_APP_USER_ROLE)
 
   useEffect(() => {
     getProfile(user.id);
