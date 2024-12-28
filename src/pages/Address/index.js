@@ -2,26 +2,26 @@ import { Box, Button, CircularProgress, Grid, TextField, Typography } from '@mui
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { uploadFile } from '../../firebase';
-import useProfile from '../../hooks/useProfile';
+import useAddress from '../../hooks/useAddress';
 
 
-const Home = () => {
+const Address = () => {
 
   const state = useSelector((state) => state);
   const {user} = state.logger;
-  const {profile} = state.profileuser;
-  const {saveProfile, updateProfile, loading} = useProfile();
-
+  const {Home} = state.homestate;
+  const {saveAddress, updateAddress, loading} = useAddress();
 
   console.log("state", JSON.stringify(state, null, 5));
   const [formData, setFormData] = useState({
-    id: profile.id ?? '',
-    idUser: user.id ?? '',
-    apellido: profile.lastName ?? '',
-    nombre: profile.name ?? '',
-    telefono: profile.numberPhone ?? '',
-    foto: profile.avatar ?? null,
-    fotoPreview: profile.avatar ?? null,
+    id:Home.id ?? 0,
+    idUser:user.id,
+    address: Home.address ?? '', 
+    number: Home.number ?? null,
+    photo : Home.photo ?? null,
+    fotoPreview: Home.photo ?? null,
+    latitude:Home.latitude ?? null,
+    longitude: Home.longitude ?? null,
   });
 
   //@ts-ignore
@@ -41,8 +41,25 @@ const Home = () => {
       });
     }
   };
+  const handleGetLocation = () => {
+    if (!navigator.geolocation) {
+      alert('La geolocalización no está soportada por tu navegador.');
+      return;
+    }
 
-  //@ts-ignore
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setFormData({ ...formData, latitude, longitude });
+        console.log('Ubicación obtenida:', latitude, longitude);
+      },
+      (error) => {
+        console.error('Error al obtener ubicación:', error);
+        alert('No se pudo obtener la ubicación. Por favor, verifica los permisos.');
+      }
+    );
+  };
+  
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -57,29 +74,31 @@ const Home = () => {
       }
     }
 
-    if(profile.id === 0){
-      const body = {
-        idUser: user.id,
-        name: formData.nombre,
-        lastName: formData.apellido,
-        numberPhone: formData.telefono,
-        avatar: avatarUrl,
-      }
+    if(Home.id === 0){
+        const body = {
+            idUser: formData.idUser,
+            address: formData.address,
+            number: formData.number,
+            photo: avatarUrl,
+            latitude: formData.latitude,
+            longitude: formData.longitude,
+          };
       console.log('guardar');
-      saveProfile(body);
+      saveAddress(body);
 
     }else {
-      const body = {
-        id: profile.id,
-        idUser: user.id,
-        name: formData.nombre,
-        lastName: formData.apellido,
-        numberPhone: formData.telefono,
-        avatar: avatarUrl,
-      }
+        const body = {
+            id: formData.id,
+            idUser: formData.idUser,
+            address: formData.address,
+            number: formData.number,
+            photo: avatarUrl,
+            latitude: formData.latitude,
+            longitude: formData.longitude,
+          };
   
       console.log('actualizar');
-      updateProfile(body);
+      updateAddress(body);
     }
 
   };
@@ -110,17 +129,18 @@ const Home = () => {
       <Grid item xs={12} md={6}>
         <Box sx={{ p: 3, boxShadow: 3, borderRadius: 2, backgroundColor: '#fff' }}>
           <Typography variant="h5" align="center" gutterBottom alignSelf={'center'}>
-            Datos Personales
+            Datos domiciliarios
           </Typography>
           <form onSubmit={handleSubmit}>
             <Grid container spacing={2}>
+              
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  label="Apellido"
-                  name="apellido"
+                  label="Domicilio"
+                  name="address"
                   variant="outlined"
-                  value={formData.apellido}
+                  value={formData.address}
                   onChange={handleInputChange}
                   required
                 />
@@ -128,21 +148,10 @@ const Home = () => {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  label="Nombre"
-                  name="nombre"
+                  label="Altura"
+                  name="number"
                   variant="outlined"
-                  value={formData.nombre}
-                  onChange={handleInputChange}
-                  required
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Teléfono"
-                  name="telefono"
-                  variant="outlined"
-                  value={formData.telefono}
+                  value={formData.number}
                   onChange={handleInputChange}
                   required
                 />
@@ -177,6 +186,17 @@ const Home = () => {
               </Grid>
               <Grid item xs={12}>
                 <Button
+                  variant="contained"
+                  color="secondary"
+                  fullWidth
+                  onClick={handleGetLocation}
+                  sx={{ textTransform: 'none', mb: 2 }}
+                >
+                  Obtener Ubicación
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
                   type="submit"
                   variant="contained"
                   color="primary"
@@ -200,4 +220,6 @@ const Home = () => {
   );
 };
 
-export default Home;
+
+
+export default Address

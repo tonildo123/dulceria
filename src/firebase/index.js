@@ -1,8 +1,8 @@
-import { initializeApp } from "firebase/app";
 import { getFirestore } from '@firebase/firestore';
+import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { v4 } from 'uuid'
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { v4 } from 'uuid';
 
 const firebaseConfig = {
   apiKey: "AIzaSyABDggLbGI1cpYJruXzDPLDDZuLLQWgjVw",
@@ -27,8 +27,6 @@ const storage = getStorage(app);
 export async function uploadFile(file, nameFile, folderName) {
 
   try {
-
-
     const storageRef = ref(storage, `${folderName}/${v4()}${nameFile}`)
     await uploadBytes(storageRef, file)
     const url = await getDownloadURL(storageRef)
@@ -44,4 +42,4 @@ export async function uploadFile(file, nameFile, folderName) {
 
 
 
-export { app, db, auth, firebaseConfig }
+export { app, auth, db, firebaseConfig };

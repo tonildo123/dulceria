@@ -1,5 +1,0 @@
-.hide-on-small {
-    @media (max-width: 767px) {
-      display: none;
-    }
-  }

@@ -27,8 +27,8 @@ const menuDrawerUnlogged = [
 
 const menuDrawerLogged = [
     { 'label': 'Inicio', 'ruta': '/' },
-    { 'label': 'Mi Casa', 'ruta': '/my-home' },
-    { 'label': 'Mi Perfil', 'ruta': '/my-profile' }];
+    { 'label': 'Mi Perfil', 'ruta': '/home' },
+    { 'label': 'Mi casa', 'ruta': '/address' }];
 
 function ResponsiveAppBar() {
 
@@ -106,8 +106,12 @@ function ResponsiveAppBar() {
                         >
                             {!logged && menuDrawerUnlogged.map((page) => (
                                 <MenuItem key={page.label} onClick={handleCloseNavMenu}>
-                                    <Typography component={NavLink}
-                                        to={`${page.ruta}`} textAlign="center" style={{ color: 'black' }}>{page.label}</Typography>
+                                    <Typography 
+                                        component={NavLink}
+                                        to={`${page.ruta}`} 
+                                        textAlign="center" 
+                                        style={{ color: 'black', textDecoration: 'none' }}
+                                    >{page.label}</Typography>
                                 </MenuItem>
                             ))}
                             {logged && menuDrawerLogged.map((page) => (

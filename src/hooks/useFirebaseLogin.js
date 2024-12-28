@@ -1,13 +1,13 @@
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import { loggearme } from '../state/LoginSlice';
 
 
 const useFirebaseLogin = () => {
 
-    const distpach = useDispatch()
+    const distpach = useDispatch();
 
     const [error, setError] = useState(null)
 
@@ -21,9 +21,11 @@ const useFirebaseLogin = () => {
                         email: email,
                         password: password
                     }
+                    
                     sessionStorage.setItem("emailSession", email)
                     sessionStorage.setItem("passSession", password);
                     distpach(loggearme(user))
+
                 })
                 .catch((error) => {
                     setError(error.message);
