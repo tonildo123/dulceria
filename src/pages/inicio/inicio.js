@@ -1,4 +1,3 @@
-/* eslint-disable */
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { Box, Button, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
@@ -10,12 +9,12 @@ const Inicio = () => {
 
   const {getProfile} = useProfile()
   const {getAddress} = useAddress()
-  const state = useSelector(state => state)
-  const {user} = state.logger;
+  const user = useSelector(state => state.logger.user);
 
   useEffect(() => {
     getProfile(user.id);
     getAddress(user.id);
+     // eslint-disable-next-line 
   }, []);
 
   return (

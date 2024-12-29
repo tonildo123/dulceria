@@ -5,7 +5,6 @@ const CACHE_NAME = 'rogans-cache';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/offline.html', 
 ];
 
 self.addEventListener('install', (event) => {
@@ -15,10 +14,3 @@ self.addEventListener('install', (event) => {
   );
 });
 
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => response || fetch(event.request))
-      .catch(() => caches.match('/offline.html')) 
-  );
-});

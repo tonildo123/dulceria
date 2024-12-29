@@ -11,16 +11,16 @@ const useAddress = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false)
 
-  const saveAddress = async(adress) => {
+  const saveAddress = async (address) => {
     try {
 
       setLoading(true)
-      console.log('datos guardados', adress)
-      const adressCollection = collection(db, 'adress');
+      console.log('datos guardados', address)
+      const addressCollection = collection(db, 'address');
 
-      const docRef = await addDoc(adressCollection, adress);
-      const newIdadress = docRef.id;
-      console.log(newIdadress)
+      const docRef = await addDoc(addressCollection, address);
+      const newIdaddress = docRef.id;
+      console.log(newIdaddress)
       Swal.fire({
         title: 'Guadado exitosamente!',
         icon: 'success',
@@ -29,80 +29,80 @@ const useAddress = () => {
 
       }).then((result) => {
         if (result.isConfirmed) {
-          const adress2 = {
-            id: newIdadress,
-            idUser: adress.idUser,
-            address: adress.address, 
-            number: adress.number,
-            photo : adress.photo,
-            latitude: adress.latitude,
-            longitude: adress.longitude,
+          const address2 = {
+            id: newIdaddress,
+            idUser: address.idUser,
+            address: address.address,
+            number: address.number,
+            photo: address.photo,
+            latitude: address.latitude,
+            longitude: address.longitude,
           }
 
-          dispatch(HomeSuccess(adress2))
+          dispatch(HomeSuccess(address2))
           navigate('/address');
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           navigate('/address');
         }
       });
       setLoading(false)
-      
+
     } catch (error) {
       setLoading(false)
-      
+
     }
   }
 
   const getAddress = async (idUser) => {
     try {
       setLoading(true)
-      const adressQuery = query(
+      const addressQuery = query(
         collection(db, "address"),
         where("idUser", "==", idUser)
       );
-      const querySnapshot = await getDocs(adressQuery);
-      
+      const querySnapshot = await getDocs(addressQuery);
+
       if (querySnapshot.empty) {
-        console.log('No adress found for this user');
+        console.log('No address found for this user');
         setLoading(false)
         return null;
       }
 
-      const adressDoc = querySnapshot.docs[0];
-      const adressData = adressDoc.data();
-      const adress = {
-        id:adressDoc.id,
-        idUser:adressData.idUser,
-        address: adressData.address, 
-        number: adressData.number,
-        photo : adressData.photo,
-        latitude:adressData.latitude,
-        longitude: adressData.longitude,
+      const addressDoc = querySnapshot.docs[0];
+      const addressData = addressDoc.data();
+      const address = {
+        id: addressDoc.id,
+        idUser: addressData.idUser,
+        address: addressData.address,
+        number: addressData.number,
+        photo: addressData.photo,
+        latitude: addressData.latitude,
+        longitude: addressData.longitude,
       };
 
-      dispatch(HomeSuccess(adress));
+      dispatch(HomeSuccess(address));
       setLoading(false)
-      return adress;
+      return address;
     } catch (error) {
       setLoading(false)
-      console.error("Error fetching adress:", error);
-      Swal.fire('Error', 'There was an error fetching your adress', 'error');
+      console.error("Error fetching address:", error);
+      Swal.fire('Error', 'There was an error fetching your address', 'error');
       return null;
     }
   }
 
-  const updateAddress = async(adress) => {
+  const updateAddress = async (address) => {
     try {
 
       setLoading(true)
-      console.log('datos actualizados', adress)
-      const adressQuery = query(
-        collection(db, "adress"),
-        where("idUser", "==", adress.idUser)
+      console.log('datos actualizados', address)
+      const addressQuery = query(
+        collection(db, "address"),
+        where("idUser", "==", address.idUser)
       );
-      const querySnapshot = await getDocs(adressQuery);
-      const adressDoc = querySnapshot.docs[0].ref;
-      await updateDoc(adressDoc, adress)
+      const querySnapshot = await getDocs(addressQuery);
+      const addressDoc = querySnapshot.docs[0].ref;
+      await updateDoc(addressDoc, address)
       setLoading(false)
 
       Swal.fire({
@@ -114,13 +114,13 @@ const useAddress = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           const prof = {
-            id: adress.id,
-            idUser: adress.idUser,
-            address: adress.address, 
-            number: adress.number,
-            photo : adress.photo,
-            latitude: adress.latitude,
-            longitude: adress.longitude,
+            id: address.id,
+            idUser: address.idUser,
+            address: address.address,
+            number: address.number,
+            photo: address.photo,
+            latitude: address.latitude,
+            longitude: address.longitude,
           }
 
           dispatch(HomeSuccess(prof))
@@ -129,16 +129,16 @@ const useAddress = () => {
           navigate('/address');
         }
       });
-      
+
     } catch (error) {
       setLoading(false)
-      
+
     }
   }
 
   return {
-    saveAddress, 
-    getAddress, 
+    saveAddress,
+    getAddress,
     updateAddress,
     loading
   }

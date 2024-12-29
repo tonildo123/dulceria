@@ -22,7 +22,7 @@ reducers: {
         idUser:action.payload.idUser,
         address:action.payload.address,
         number:action.payload.number,
-        photo :action.payload.photo,
+        photo:action.payload.photo,
         latitude:action.payload.latitude,
         longitude: action.payload.longitude,
     };
