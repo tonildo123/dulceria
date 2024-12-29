@@ -73,7 +73,7 @@ function ResponsiveAppBar() {
                             textDecoration: 'none',
                         }}
                     >
-                        Rogans
+                        Guardia
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
@@ -142,7 +142,7 @@ function ResponsiveAppBar() {
                             textDecoration: 'none',
                         }}
                     >
-                        Rogans
+                        Guardia
                     </Typography>{/**mobile */}
                     {/**desde aqui web */}
                     {logged
@@ -150,7 +150,7 @@ function ResponsiveAppBar() {
                             <Button
                                 variant="text"
                                 component={NavLink}
-                                to="/home"
+                                to="/"
                                 sx={{ pt: 1 }}
                             >
                                 Inicio
@@ -158,26 +158,18 @@ function ResponsiveAppBar() {
                             <Button
                                 variant="text"
                                 component={NavLink}
-                                to="/product/create"
+                                to="/home"
                                 sx={{ pt: 1 }}
                             >
-                                Productos
+                                Mi perfil
                             </Button>
                             <Button
                                 variant="text"
                                 component={NavLink}
-                                to="/nosotros"
+                                to="/address"
                                 sx={{ pt: 1 }}
                             >
-                                Nosotros
-                            </Button>
-                            <Button
-                                variant="text"
-                                component={NavLink}
-                                to="/contacto"
-                                sx={{ pt: 1 }}
-                            >
-                                Contacto
+                                Mi casa
                             </Button>
                         </Box>
                         : <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
@@ -192,28 +184,20 @@ function ResponsiveAppBar() {
                             <Button
                                 variant="text"
                                 component={NavLink}
-                                to="/productos"
+                                to="/login"
                                 sx={{ pt: 1 }}
                             >
-                                Productos
+                                Ingresar
                             </Button>
                             <Button
                                 variant="text"
                                 component={NavLink}
-                                to="/nosotros"
+                                to="/register"
                                 sx={{ pt: 1 }}
                             >
-                                Nosotros
+                                Registrarme
                             </Button>
-                            <Button
-                                variant="text"
-                                component={NavLink}
-                                to="/contacto"
-                                sx={{ pt: 1 }}
-                            >
-                                Contacto
-                            </Button>
-
+                            
                         </Box>}
                     <Box>
                         {

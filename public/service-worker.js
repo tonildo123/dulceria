@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */ 
 // service-worker.js
 
-const CACHE_NAME = 'rogans-cache';
+const CACHE_NAME = 'guardia-cache';
 const urlsToCache = [
   '/',
   '/index.html',

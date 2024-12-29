@@ -1,5 +1,6 @@
+/* eslint-disable */
 import { Box, Button, CircularProgress, Grid, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import MapComponent from '../../components/MapComponent';
 import { uploadFile } from '../../firebase';
@@ -7,7 +8,10 @@ import useAddress from '../../hooks/useAddress';
 
 
 const Address = () => {
-
+  const [mapDimensions, setMapDimensions] = useState({
+    width: 0,
+    height: 0
+  });
   const state = useSelector((state) => state);
   const {user} = state.logger;
   const {Home} = state.homestate;
@@ -104,6 +108,35 @@ const Address = () => {
 
   };
 
+  useEffect(() => {
+    const calculateMapSize = () => {
+      // Obtener el ancho de la ventana
+      const windowWidth = window.innerWidth;
+      
+      // Calcular dimensiones
+      let width, height;
+      
+      if (windowWidth < 600) { // móvil
+        width = windowWidth; // 32px para padding
+        height = width * 0.75; // proporción 4:3
+      } else { // desktop
+        width = Math.min(1000, windowWidth); // máximo 1000 o 60% del ancho
+        height = width * 0.6; // proporción más cuadrada para desktop
+      }
+
+      setMapDimensions({ width, height });
+    };
+
+    // Calcular dimensiones iniciales
+    calculateMapSize();
+
+    // Añadir listener para recalcular en resize
+    window.addEventListener('resize', calculateMapSize);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', calculateMapSize);
+  }, []);
+
 
   if(loading){
     return (
@@ -196,11 +229,11 @@ const Address = () => {
                   Obtener Ubicación
                 </Button>
                 {formData.latitude && (
-                  <Box sx={{ mt: 2, textAlign: 'center' }}>
-                    <Typography variant="body2" sx={{ mb: 1 }}>
-                      Vista previa de la mapa:
-                    </Typography>
-                    <MapComponent />
+                  <Box>
+                    <MapComponent 
+                      ancho={mapDimensions.width}
+                      altura={mapDimensions.height}                    
+                    />
                   </Box>
                 )}
               </Grid>
