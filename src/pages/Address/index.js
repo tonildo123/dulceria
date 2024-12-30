@@ -2,22 +2,15 @@
 import { Box, Button, CircularProgress, Grid, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import MapComponent from '../../components/MapComponent';
 import { uploadFile } from '../../firebase';
 import useAddress from '../../hooks/useAddress';
 
 
 const Address = () => {
-  const [mapDimensions, setMapDimensions] = useState({
-    width: 0,
-    height: 0
-  });
-  const state = useSelector((state) => state);
-  const {user} = state.logger;
-  const {Home} = state.homestate;
+  
+  const {user} = useSelector((state) => state.logger);
+  const {Home} = useSelector((state) => state.homestate);
   const {saveAddress, updateAddress, loading} = useAddress();
-
-  console.log("state", JSON.stringify(state, null, 5));
   const [formData, setFormData] = useState({
     id:Home.id ?? 0,
     idUser:user.id,
@@ -109,32 +102,7 @@ const Address = () => {
   };
 
   useEffect(() => {
-    const calculateMapSize = () => {
-      // Obtener el ancho de la ventana
-      const windowWidth = window.innerWidth;
-      
-      // Calcular dimensiones
-      let width, height;
-      
-      if (windowWidth < 600) { // móvil
-        width = windowWidth; // 32px para padding
-        height = width * 0.75; // proporción 4:3
-      } else { // desktop
-        width = Math.min(1000, windowWidth); // máximo 1000 o 60% del ancho
-        height = width * 0.6; // proporción más cuadrada para desktop
-      }
-
-      setMapDimensions({ width, height });
-    };
-
-    // Calcular dimensiones iniciales
-    calculateMapSize();
-
-    // Añadir listener para recalcular en resize
-    window.addEventListener('resize', calculateMapSize);
-
-    // Cleanup
-    return () => window.removeEventListener('resize', calculateMapSize);
+    handleGetLocation();
   }, []);
 
 
@@ -217,26 +185,7 @@ const Address = () => {
                     />
                   </Box>
                 )}
-              </Grid>
-              <Grid item xs={12}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  fullWidth
-                  onClick={handleGetLocation}
-                  sx={{ textTransform: 'none', mb: 2 }}
-                >
-                  Obtener Ubicación
-                </Button>
-                {formData.latitude && (
-                  <Box>
-                    <MapComponent 
-                      ancho={mapDimensions.width}
-                      altura={mapDimensions.height}                    
-                    />
-                  </Box>
-                )}
-              </Grid>
+              </Grid>              
               <Grid item xs={12}>
                 <Button
                   type="submit"
