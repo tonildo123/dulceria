@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 export const LoginSlice = createSlice({
 name: 'logger',
@@ -7,7 +7,8 @@ initialState: {
     { 
       id:0,
       email: null, 
-      password: null,
+      role: null,
+      createdAt: null,
       logged : false
     },
 
@@ -17,7 +18,8 @@ reducers: {
     let newUser = {
       id:action.payload.id,
       email: action.payload.email, 
-      password: action.payload.password,
+      role: action.payload.role,
+      createdAt: action.payload.createdAt,
       logged : true
     };
     
@@ -29,7 +31,8 @@ reducers: {
     state.user =  { 
       id:0,
       email: null, 
-      password: null,
+      role: null,
+      createdAt: null,
       logged : false
     }
   }

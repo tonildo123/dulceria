@@ -3,12 +3,13 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { auth } from '../firebase';
 import { loggearme } from '../state/LoginSlice';
+import useUser from './useUser';
 
 
 const useFirebaseLogin = () => {
 
     const distpach = useDispatch();
-
+    const {getUser} = useUser();
     const [error, setError] = useState(null)
 
     const handleLogin = async (email, password) => {
@@ -16,10 +17,15 @@ const useFirebaseLogin = () => {
         try {
             await signInWithEmailAndPassword(auth, email, password)
                 .then(async (userCredential) => {
+                    
+
+                    const userData = await getUser(userCredential.user.uid)
+                    
                     const user = {
                         id: userCredential.user.uid,
                         email: email,
-                        password: password
+                        role: userData.role,
+                        createdAt: userData.createdAt
                     }
                     
                     sessionStorage.setItem("emailSession", email)

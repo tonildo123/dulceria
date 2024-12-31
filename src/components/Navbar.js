@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Cookie from '@mui/icons-material/Cookie';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -19,50 +18,67 @@ import { NavLink } from "react-router-dom";
 import { unlogger } from '../state/LoginSlice';
 import { profileClean } from '../state/Profileslice';
 
-
-const menuDrawerUnlogged = [
-    { 'label': 'Inicio', 'ruta': '/' },
-    { 'label': 'Iniciar sesion', 'ruta': '/login' },
-    { 'label': 'Registrarme', 'ruta': '/register' }];
-
-const menuDrawerLogged = [
-    { 'label': 'Inicio', 'ruta': '/' },
-    { 'label': 'Mi Perfil', 'ruta': '/home' },
-    { 'label': 'Mi casa', 'ruta': '/address' }];
+// Define menus for different roles
+const menusByRole = {
+    unlogged: [
+        { label: 'Iniciar sesion', ruta: '/' },
+        { label: 'Registrarme', ruta: '/register' }
+    ],
+    client: [
+        { label: 'Inicio', ruta: '/' },
+        { label: 'Mi Perfil', ruta: '/home' },
+        { label: 'Mi casa', ruta: '/address' }
+    ],
+    police: [
+        { label: 'Inicio', ruta: '/police' }
+    ],
+    admin: [
+        { label: 'Inicio', ruta: '/' },
+        { label: 'Mi Perfil', ruta: '/home' },
+        { label: 'Mi casa', ruta: '/address' },
+        { label: 'Guardias', ruta: '/police' },
+        { label: 'Alerta', ruta: '/alert' }
+    ]
+};
 
 function ResponsiveAppBar() {
-
-    const dispatch = useDispatch()
-
-    const { logged } = useSelector(state => state.logger.user)
-
+    const dispatch = useDispatch();
+    const { logged, role } = useSelector(state => state.logger.user);
     const [anchorElNav, setAnchorElNav] = React.useState(null);
+
+    // Get current menu based on login status and role
+    const getCurrentMenu = () => {
+        if (!logged) return menusByRole.unlogged;
+        return menusByRole[role] || menusByRole.client;
+    };
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
-
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
 
     const Salir = () => {
-        dispatch(unlogger())
-        dispatch(profileClean())
+        dispatch(unlogger());
+        dispatch(profileClean());
         sessionStorage.clear();
     };
+
+    const currentMenu = getCurrentMenu();
 
     return (
         <AppBar position="static" sx={{ backgroundColor: 'white' }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
+                    {/* Logo for desktop */}
                     <Cookie sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: '#E74C3C' }} />
                     <Typography
                         variant="h6"
                         noWrap
                         component={NavLink}
-                        to={logged ? "/" : "/"}
+                        to="/"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -75,6 +91,8 @@ function ResponsiveAppBar() {
                     >
                         Guardia
                     </Typography>
+
+                    {/* Mobile menu */}
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -82,7 +100,6 @@ function ResponsiveAppBar() {
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
-
                         >
                             <MenuIcon />
                         </IconButton>
@@ -101,36 +118,31 @@ function ResponsiveAppBar() {
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                             sx={{
-                                display: { xs: 'block', md: 'none', color: 'black' },
+                                display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {!logged && menuDrawerUnlogged.map((page) => (
-                                <MenuItem key={page.label} onClick={handleCloseNavMenu}>
-                                    <Typography 
-                                        component={NavLink}
-                                        to={`${page.ruta}`} 
-                                        textAlign="center" 
-                                        style={{ color: 'black', textDecoration: 'none' }}
-                                    >{page.label}</Typography>
-                                </MenuItem>
-                            ))}
-                            {logged && menuDrawerLogged.map((page) => (
+                            {currentMenu.map((page) => (
                                 <MenuItem key={page.label} onClick={handleCloseNavMenu}>
                                     <Typography
                                         component={NavLink}
-                                        to={`${page.ruta}`}
+                                        to={page.ruta}
                                         textAlign="center"
-                                        style={{ color: 'black' }}>{page.label}</Typography>
+                                        style={{ color: 'black', textDecoration: 'none' }}
+                                    >
+                                        {page.label}
+                                    </Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
                     </Box>
-                    <Cookie sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+
+                    {/* Logo for mobile */}
+                    <Cookie sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, color: '#E74C3C' }} />
                     <Typography
                         variant="h6"
                         noWrap
                         component={NavLink}
-                        to={logged ? "/" : "/login"}
+                        to="/"
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -143,88 +155,54 @@ function ResponsiveAppBar() {
                         }}
                     >
                         Guardia
-                    </Typography>{/**mobile */}
-                    {/**desde aqui web */}
-                    {logged
-                        ? <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                            <Button
-                                variant="text"
-                                component={NavLink}
-                                to="/"
-                                sx={{ pt: 1 }}
-                            >
-                                Inicio
-                            </Button>
-                            <Button
-                                variant="text"
-                                component={NavLink}
-                                to="/home"
-                                sx={{ pt: 1 }}
-                            >
-                                Mi perfil
-                            </Button>
-                            <Button
-                                variant="text"
-                                component={NavLink}
-                                to="/address"
-                                sx={{ pt: 1 }}
-                            >
-                                Mi casa
-                            </Button>
-                        </Box>
-                        : <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                            <Button
-                                variant="text"
-                                component={NavLink}
-                                to="/"
-                                sx={{ pt: 1 }}
-                            >
-                                Inicio
-                            </Button>
-                            <Button
-                                variant="text"
-                                component={NavLink}
-                                to="/login"
-                                sx={{ pt: 1 }}
-                            >
-                                Ingresar
-                            </Button>
-                            <Button
-                                variant="text"
-                                component={NavLink}
-                                to="/register"
-                                sx={{ pt: 1 }}
-                            >
-                                Registrarme
-                            </Button>
-                            
-                        </Box>}
-                    <Box>
-                        {
-                            logged
-                                ?
-                                <Button
-                                    variant="text"
-                                    component={NavLink}
-                                    onClick={Salir}
-                                    sx={{ pt: 1 }}
-                                >
-                                    <LogoutIcon sx={{ color: '#E74C3C' }} />
-                                </Button> :
-                                <Button
-                                    variant="text"
-                                    component={NavLink}
-                                    to="/login"
-                                    sx={{ pt: 1 }}
-                                >
-                                    <AccountCircleIcon sx={{ color: '#E74C3C' }} />
-                                </Button>
-                        }
+                    </Typography>
 
+                    {/* Desktop menu */}
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                        {currentMenu.map((page) => (
+                            <Button
+                                key={page.label}
+                                variant="text"
+                                component={NavLink}
+                                to={page.ruta}
+                                sx={{ 
+                                    pt: 1,
+                                    color: 'black',
+                                    '&.active': {
+                                        color: '#E74C3C'
+                                    }
+                                }}
+                            >
+                                {page.label}
+                            </Button>
+                        ))}
+                    </Box>
+
+                    {/* Login/Logout button */}
+                    <Box>
+                        {logged ? (
+                            <Button
+                                variant="text"
+                                onClick={Salir}
+                                sx={{ pt: 1 }}
+                            >
+                                <LogoutIcon sx={{ color: '#E74C3C' }} />
+                            </Button>
+                        ) : (
+                            <Button
+                                variant="text"
+                                component={NavLink}
+                                to="/"
+                                sx={{ pt: 1 }}
+                            >
+                                <AccountCircleIcon sx={{ color: '#E74C3C' }} />
+                            </Button>
+                        )}
                     </Box>
                 </Toolbar>
             </Container>
         </AppBar>
     );
 }
+
 export default ResponsiveAppBar;

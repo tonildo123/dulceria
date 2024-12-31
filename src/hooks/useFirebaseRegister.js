@@ -1,13 +1,15 @@
-import { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { auth } from '../firebase';
-import Swal from 'sweetalert2';
-import { useNavigate } from "react-router-dom";
+import { loggearme } from '../state/LoginSlice';
+import useUser from './useUser';
 
 const useFirebaseRegister = () => {
 
-    const navigate = useNavigate();
     const [error, setError] = useState(null);
+    const distpach = useDispatch();
+    const {saveUser} = useUser();
 
     const handleRegister = async (email, password, repassword) => {
         if (password !== repassword) {
@@ -17,14 +19,42 @@ const useFirebaseRegister = () => {
         try {
             await createUserWithEmailAndPassword(auth, email, password)
                 .then(async (userCredential) => {
-                    Swal.fire({
-                        title: 'Usuario creado con éxito',
-                        text: email,
-                        icon: 'success',
-                        confirmButtonText: 'Ok',
-                    });
+                    const user = {
+                        id: userCredential.user.uid,
+                        email: email,
+                        role: 'client',
+                        createdAt: new Date().toISOString()
+                    }
+                    await saveUser(user)
+                    sessionStorage.setItem("emailSession", email)
+                    sessionStorage.setItem("passSession", password);
+                    distpach(loggearme(user))
+                    
+                })
+                .catch((error) => {
+                    setError(error.message);
+                });
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+    const handleRegisterPolice = async (email, password) => {
+       
 
-                    navigate('/login');
+        try {
+            await createUserWithEmailAndPassword(auth, email, password)
+                .then(async (userCredential) => {
+                    const user = {
+                        id: userCredential.user.uid,
+                        email: email,
+                        role: 'police',
+                        createdAt: new Date().toISOString()
+                    }
+                    await saveUser(user)
+                    sessionStorage.setItem("emailSession", email)
+                    sessionStorage.setItem("passSession", password);
+                    distpach(loggearme(user))
+                    
                 })
                 .catch((error) => {
                     setError(error.message);
@@ -34,7 +64,8 @@ const useFirebaseRegister = () => {
         }
     };
 
-    return { handleRegister, error, setError };
+
+    return { handleRegister, error, setError, handleRegisterPolice };
 };
 
 export default useFirebaseRegister;

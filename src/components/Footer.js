@@ -1,4 +1,8 @@
-import React from 'react';
+import EmailIcon from '@mui/icons-material/Email';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
+import TwitterIcon from '@mui/icons-material/Twitter';
 import {
     AppBar,
     Box,
@@ -9,13 +13,9 @@ import {
     Toolbar,
     Typography,
 } from '@mui/material';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
-import EmailIcon from '@mui/icons-material/Email';
-import { NavLink } from 'react-router-dom';
+import React from 'react';
 import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 const Footer = () => {
     const textColor = 'white';
@@ -66,7 +66,7 @@ const Footer = () => {
                                     variant="body2"
                                     noWrap
                                     component={NavLink}
-                                    to={logged ? "/home" : "/login"}
+                                    to={logged ? "/home" : "/"}
                                     sx={{
                                         mr: 2,
                                         // display: { xs: 'none', md: 'flex' },
@@ -87,7 +87,7 @@ const Footer = () => {
                                     variant="body2"
                                     noWrap
                                     component={NavLink}
-                                    to={logged ? "/home" : "/login"}
+                                    to={logged ? "/home" : "/"}
                                     sx={{
                                         mr: 2,
                                         // display: { xs: 'none', md: 'flex' },
@@ -107,7 +107,7 @@ const Footer = () => {
                                     variant="h6"
                                     noWrap
                                     component={NavLink}
-                                    to={logged ? "/home" : "/login"}
+                                    to={logged ? "/home" : "/"}
                                     sx={{
                                         mr: 2,
                                         // display: { xs: 'none', md: 'flex' },

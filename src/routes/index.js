@@ -1,15 +1,17 @@
 /* eslint-disable */
-import { useSelector } from 'react-redux';
-import RoutesPrivate from './RoutesPrivate';
-import RoutesPublic from './RoutesPublic';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import useFirebaseLogin from '../hooks/useFirebaseLogin';
+import RoutesPrivate from './RoutesPrivate';
+import RoutesPrivateAdmin from './RoutesPrivateAdmin';
+import RoutesPrivatePolice from './RoutesPrivatePolice';
+import RoutesPublic from './RoutesPublic';
 
 
 const RouterApp = () => {
 
-    const { logged } = useSelector(state => state.logger.user);
+    const { logged, role } = useSelector(state => state.logger.user);
     const { handleLogin } = useFirebaseLogin()
    
 
@@ -32,11 +34,15 @@ const RouterApp = () => {
 
         <BrowserRouter>
             <Routes>
-                {
-                    logged
-                        ? <Route path="/*" element={<RoutesPrivate />} />
-                        : <Route path="/*" element={<RoutesPublic />} />
-                }
+                {logged ? (
+                <>
+                    {role === 'admin' && <Route path="/*" element={<RoutesPrivateAdmin />} />}
+                    {role === 'police' && <Route path="/*" element={<RoutesPrivatePolice />} />}
+                    {role === 'client' && <Route path="/*" element={<RoutesPrivate />} />}
+                </>
+                ) : (
+                <Route path="/*" element={<RoutesPublic />} />
+                )}
             </Routes>
         </BrowserRouter>
     )
