@@ -5,16 +5,67 @@ import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import useAddress from '../../hooks/useAddress';
 import useProfile from '../../hooks/useProfile';
+import useRealTime from '../../hooks/useRealTime';
 
 const Inicio = () => {
 
   const {getProfile} = useProfile()
   const {getAddress} = useAddress()
   const user = useSelector(state => state.logger.user);
+  const profile = useSelector(state => state.profileuser.profile);
+  const Home = useSelector(state => state.homestate.Home);
   const [alertVisible, setAlertVisible] = useState(false);
+  const { writeDataBaseAlert } = useRealTime();
+  const [currentLocation, setCurrentLocation] = useState({
+    lat: null, 
+    lng: null
+  });
+  
 
-  const handleButtonClick = () => {
-    setAlertVisible(true);
+
+  useEffect(() => {
+    getProfile(user.id);
+    getAddress(user.id);
+     // eslint-disable-next-line 
+  }, []);
+
+  useEffect(() => {
+    // Intentar obtener la ubicación del usuario
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCurrentLocation({
+            lat: latitude,
+            lng: longitude
+          });
+        },
+        (error) => {
+          console.error('Error al obtener la ubicación:', error);
+        }
+      );
+    } else {
+      console.error('El navegador no soporta Geolocalización');
+    }
+  }, []);
+  const handleButtonClick = async () => {
+    try {
+        const newAlert = {
+            type: 'emergency',
+            message: 'Nueva emergencia',
+            location: {
+                lat: currentLocation.lat,
+                lng: currentLocation.lng
+            },
+            data: {
+                home: Home,
+                profile: profile
+            }
+        };
+
+        const alertId = await writeDataBaseAlert(newAlert);
+        console.log('Alerta creada con ID:', alertId);
+        setAlertVisible(true);
 
     Swal.fire({
       title: 'Ya enviamos tu alerta',
@@ -29,13 +80,10 @@ const Inicio = () => {
         console.log('Alerta cerrada');
       },
     });
-  };
-
-  useEffect(() => {
-    getProfile(user.id);
-    getAddress(user.id);
-     // eslint-disable-next-line 
-  }, []);
+    } catch (error) {
+        console.error('Error al crear alerta:', error);
+    }
+};
 
   return (
     <Box sx={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
