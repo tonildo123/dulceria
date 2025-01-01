@@ -16,15 +16,15 @@ const Police = () => {
   
   const { subscribeToAlerts } = useRealTime();
   const [playSound, setPlaySound] = useState(false);
+  const [processedAlerts, setProcessedAlerts] = useState([]);
+
 
 useEffect(() => {
     
     const filterAlerts = (alert) => alert.type === 'emergency';
     const unsubscribe = subscribeToAlerts((alerts) => {
         console.log('Nuevas alertas:', alerts);
-        if (alerts.length > 0) {
-          playAlertSound();
-        }
+        handleNewAlerts(alerts);
     }, filterAlerts);
 
     return () => unsubscribe();
@@ -49,6 +49,17 @@ useEffect(() => {
     console.error('El navegador no soporta Geolocalización');
   }
 }, []);
+
+const handleNewAlerts = (alerts) => {
+  const newAlerts = alerts.filter(
+    (alert) => !processedAlerts.some((a) => a.id === alert.id)
+  );
+
+  if (newAlerts.length > 0) {
+    setProcessedAlerts((prevAlerts) => [...prevAlerts, ...newAlerts]);
+    playAlertSound();
+  }
+};
 
 const playAlertSound = () => {
   setPlaySound(true);
