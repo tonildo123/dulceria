@@ -32,7 +32,30 @@ const useRealTime = () => {
         }
     };
 
-    
+    const updateDataBaseAlert = async (alertId, updatedData) => {
+        try {
+            setAlertLoading(true);
+            setError(null);
+            
+            const alertRef = ref(database, `alerts/${alertId}`);
+            
+            // Agregar timestamp de actualización
+            const dataWithTimestamp = {
+                ...updatedData,
+                updatedAt: new Date().toISOString()
+            };
+
+            await set(alertRef, dataWithTimestamp);
+            
+            setAlertLoading(false);
+            
+        } catch (error) {
+            setError(error.message);
+            setAlertLoading(false);
+            throw error;
+        }
+    };
+
     const subscribeToAlerts = (callback, filterFn = null) => {
         const alertsRef = ref(database, 'alerts');        
         const handleData = (snapshot) => {
@@ -91,7 +114,8 @@ const useRealTime = () => {
         error,
         writeDataBaseAlert,
         subscribeToAlerts,
-        subscribeToAlert
+        subscribeToAlert,
+        updateDataBaseAlert
     };
 };
 
