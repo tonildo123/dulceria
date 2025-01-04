@@ -19,16 +19,35 @@ const Police = () => {
   const [processedAlerts, setProcessedAlerts] = useState([]);
 
 
-useEffect(() => {
-    
+  useEffect(() => {
     const filterAlerts = (alert) => alert.type === 'emergency';
+
+    const isToday = (createdAt) => {
+        const today = new Date();
+        const alertDate = new Date(createdAt);
+        return (
+            alertDate.getFullYear() === today.getFullYear() &&
+            alertDate.getMonth() === today.getMonth() &&
+            alertDate.getDate() === today.getDate()
+        );
+    };
+
     const unsubscribe = subscribeToAlerts((alerts) => {
         console.log('Nuevas alertas:', alerts);
-        handleNewAlerts(alerts);
+
+        // Filtrar alertas de emergencia
+        const emergencyAlerts = alerts.filter(filterAlerts);
+
+        // Filtrar alertas por fecha del día actual
+        const todaysAlerts = emergencyAlerts.filter((alert) => isToday(alert.createdAt));
+
+        // Pasar alertas filtradas al manejador
+        handleNewAlerts(todaysAlerts);
     }, filterAlerts);
 
     return () => unsubscribe();
 }, []);
+
 
 useEffect(() => {
   
@@ -92,7 +111,7 @@ const playAlertSound = () => {
 
   return (
     <Box>
-      {currentLocation.lat && <MapComponent currentLocation={currentLocation}/>}
+      {currentLocation.lat && <MapComponent currentLocation={currentLocation} processedAlerts={processedAlerts}/>}
       {playSound && (
         <Sound
           url={audio}

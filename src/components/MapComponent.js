@@ -1,13 +1,28 @@
 import { Box, Grid, Paper } from '@mui/material';
 import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
-import React from 'react';
+import React, { useState } from 'react';
+import ModalDescription from './ModalDescription';
 
 const MapContainer = (props) => {
 
+  const [selectedItem, setSelectedItem] = useState(null); 
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const mapStyles = {
     width: '100%',
     height: '100%'
   };
+
+  const handleClick = (item) => {
+    console.log('click', JSON.stringify(item, null, 5));
+    setSelectedItem(item); 
+    setIsModalVisible(true); 
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false); 
+    setSelectedItem(null);
+  };
+
 
   return (
     <Box sx={{ flexGrow: 1, height: '100vh', p: 2 }}>
@@ -29,12 +44,33 @@ const MapContainer = (props) => {
             >
               <Marker
                 position={props.currentLocation}
-                name={'Mi ubicación'}
+                title={'Mi ubicación'}                
+                icon={{
+                    url: 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
+                  }}                
               />
+
+              {
+                props.processedAlerts.map((alert, index) => (                  
+                  <Marker
+                    key={index}
+                    position={alert?.location}
+                    title={`${alert?.data?.profile?.name}${' '}${alert?.data?.profile?.lastName}`}  
+                    onClick={() => handleClick(alert)}
+                  />
+                ))
+              }
             </Map>
           </Paper>
         </Grid>        
       </Grid>
+      {isModalVisible && selectedItem && (
+        <ModalDescription 
+          item={selectedItem} 
+          onClose={handleCloseModal} 
+          isVisible={isModalVisible} 
+        />
+      )}
     </Box>
   );
 };
