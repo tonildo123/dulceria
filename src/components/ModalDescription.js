@@ -1,7 +1,8 @@
 import {
     Warning as AlertIcon,
     CalendarToday as CalendarIcon,
-    Phone as PhoneIcon
+    LocationOn as LocationIcon,
+    Phone as PhoneIcon,
 } from '@mui/icons-material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {
@@ -14,33 +15,22 @@ import {
     Typography
 } from '@mui/material';
 import React from 'react';
+import usePhone from '../hooks/usePhone';
+import { formatDate } from '../utils/datrHelper';
+import { InfoRow } from './InfoRow';
+import useNavigation from './useNavigation';
 
-const ModalDescription = ({ item, onClose, isVisible }) => {
-  if (!item) return null;
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    }).format(date);
-  };
-
-  const InfoRow = ({ icon, label, value }) => (
-    <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-      {React.cloneElement(icon, { fontSize: 'small' })}
-      <Typography variant="body1" sx={{ ml: 2, fontWeight: 'bold' }}>
-        {label}:
-      </Typography>
-      <Typography variant="body1" sx={{ ml: 1 }}>
-        {value}
-      </Typography>
-    </Box>
-  );
+const ModalDescription = ({ item, onClose, isVisible, onShowRoute }) => {
+    const { sendWhatsApp } = usePhone();
+    const { openInGoogleMaps } = useNavigation();
+  
+    const handleNavigationClick = () => {
+      // Mostrar la ruta en el mapa actual
+      onShowRoute();
+      
+      // Abrir en Google Maps
+      openInGoogleMaps(item.location);
+    };
 
   return (
     <Dialog 
@@ -80,10 +70,16 @@ const ModalDescription = ({ item, onClose, isVisible }) => {
               </Typography>
             </Box>
             <InfoRow 
-              icon={<PhoneIcon />}
+              icon={<PhoneIcon color='green'/>}
               label="Teléfono"
               value={item?.data?.profile?.numberPhone || 'No disponible'}
-            />            
+              onClick={() => sendWhatsApp(item?.data?.profile?.numberPhone)}
+            />  
+            <InfoRow 
+              icon={<LocationIcon color='red'/>}
+              label="¿Como llegar?"
+              onClick={handleNavigationClick}
+            />              
           </Grid>
           <Grid item xs={12} md={6}>
             
@@ -103,10 +99,15 @@ const ModalDescription = ({ item, onClose, isVisible }) => {
                     alignItems: 'center',
                     mb: 1
                     }}>
-                    <Avatar
-                        src={item?.data?.home?.photo}
-                        sx={{ width: 120, height: 120, mb: 2 }}
-                    />
+                    <img
+                    src={item?.data?.home?.photo}
+                    alt="Imagen"
+                    style={{
+                      maxWidth: '100%',
+                      maxHeight: '100%',
+                      objectFit: 'contain',
+                    }}
+                  />
                     
                     </Box>
               </Box>
