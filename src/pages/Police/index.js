@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Sound from 'react-sound';
 import Swal from 'sweetalert2';
 import audio from '../../assets/audio.wav';
+import LoadingComponent from '../../components/LoadingComponent';
 import MapComponent from '../../components/MapComponent';
 import useRealTime from '../../hooks/useRealTime';
 
@@ -107,7 +108,7 @@ const playAlertSound = () => {
   return (
     <Box>
       {currentLocation.lat && <MapComponent currentLocation={currentLocation} processedAlerts={processedAlerts}/>}
-      {!currentLocation.lat && <Box sx={{ height: '70vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Cargando...</Box>}
+      {!currentLocation.lat && <LoadingComponent />}
       {playSound && (
         <Sound
           url={audio}

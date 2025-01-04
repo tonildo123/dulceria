@@ -1,9 +1,9 @@
-import { Box, Button, CircularProgress, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import LoadingComponent from '../../components/LoadingComponent';
 import { uploadFile } from '../../firebase';
 import useProfile from '../../hooks/useProfile';
-
 
 const Home = () => {
 
@@ -86,22 +86,7 @@ const Home = () => {
 
 
   if(loading){
-    return (
-      <Box sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        width: '100vw',
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        zIndex: 9999,
-      }}>
-        <CircularProgress />
-      </Box>
-    )
+    <LoadingComponent />
   }
 
   return (

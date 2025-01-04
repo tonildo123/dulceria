@@ -69,7 +69,9 @@ const Inicio = () => {
 
     Swal.fire({
       title: 'Ya enviamos tu alerta',
-      icon: 'success',
+      imageUrl: 'https://media.giphy.com/media/hqmfJ2HdlyU6jEJBcH/giphy.gif',
+      imageWidth: 200,
+      imageHeight: 200,
       showCancelButton: false, 
       showConfirmButton: false,
       timer: 60000, 
