@@ -20,8 +20,8 @@ const Police = () => {
 
 
   useEffect(() => {
-    const filterAlerts = (alert) => alert.type === 'emergency';
 
+    const filterAlerts = (alert) => alert.type === 'emergency';
     const isToday = (createdAt) => {
         const today = new Date();
         const alertDate = new Date(createdAt);
@@ -33,16 +33,11 @@ const Police = () => {
     };
 
     const unsubscribe = subscribeToAlerts((alerts) => {
-        console.log('Nuevas alertas:', alerts);
 
-        // Filtrar alertas de emergencia
+        if(alerts?.length > 0){
         const emergencyAlerts = alerts.filter(filterAlerts);
-
-        // Filtrar alertas por fecha del día actual
         const todaysAlerts = emergencyAlerts.filter((alert) => isToday(alert.createdAt));
-
-        // Pasar alertas filtradas al manejador
-        handleNewAlerts(todaysAlerts);
+        handleNewAlerts(todaysAlerts);}
     }, filterAlerts);
 
     return () => unsubscribe();
@@ -112,6 +107,7 @@ const playAlertSound = () => {
   return (
     <Box>
       {currentLocation.lat && <MapComponent currentLocation={currentLocation} processedAlerts={processedAlerts}/>}
+      {!currentLocation.lat && <Box sx={{ height: '70vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Cargando...</Box>}
       {playSound && (
         <Sound
           url={audio}
