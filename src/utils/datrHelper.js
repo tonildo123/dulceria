@@ -1,4 +1,5 @@
 export  const formatDate = (dateString) => {
+  console.log('dateString', dateString)
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('es-ES', {
       year: 'numeric',

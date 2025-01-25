@@ -1,6 +1,7 @@
 import { Box, Grid, Paper } from '@mui/material';
 import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
 import React, { useEffect, useRef, useState } from 'react';
+import { mode } from '../Constant';
 import ModalDescription from './ModalDescription';
 import useNavigation from './useNavigation';
 
@@ -63,7 +64,7 @@ const MapContainer = (props) => {
           >
             <Map
               google={props.google}
-              zoom={14}
+              zoom={15}
               style={mapStyles}
               initialCenter={props.currentLocation}
               ref={mapRef}
@@ -102,5 +103,5 @@ const MapContainer = (props) => {
 };
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyA_VW3tL6VI0n4vtb6LTon6QoPMoXLaPTo'
+  apiKey: mode.keyString
 })(MapContainer);

@@ -1,26 +1,29 @@
 import {
-    Warning as AlertIcon,
-    CalendarToday as CalendarIcon,
-    LocationOn as LocationIcon,
-    Phone as PhoneIcon,
+  Warning as AlertIcon,
+  CalendarToday as CalendarIcon,
+  LocationOn as LocationIcon,
+  Phone as PhoneIcon,
 } from '@mui/icons-material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {
-    Avatar,
-    Box,
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    Grid,
-    Typography
+  Avatar,
+  Box,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  Typography
 } from '@mui/material';
 import React from 'react';
+import { mode } from '../Constant';
 import usePhone from '../hooks/usePhone';
 import { formatDate } from '../utils/datrHelper';
 import { InfoRow } from './InfoRow';
 import useNavigation from './useNavigation';
 
 const ModalDescription = ({ item, onClose, isVisible, onShowRoute }) => {
+
+  const buildMode = mode.MODE === 'MAPA' ? false : true;
     const { sendWhatsApp } = usePhone();
     const { openInGoogleMaps } = useNavigation();
   
@@ -47,7 +50,7 @@ const ModalDescription = ({ item, onClose, isVisible, onShowRoute }) => {
         justifyContent: 'space-between'
       }}>
         <AlertIcon fontSize="small" sx={{ mr: 1 }}/>
-        Detalles de Alerta
+        {buildMode ? 'Alerta de emergencia' : 'Alerta de emergencia'}
         <CancelIcon fontSize="small" sx={{ mr: 1 }} 
         onClick={onClose}/>
       </DialogTitle>
@@ -75,11 +78,11 @@ const ModalDescription = ({ item, onClose, isVisible, onShowRoute }) => {
               value={item?.data?.profile?.numberPhone || 'No disponible'}
               onClick={() => sendWhatsApp(item?.data?.profile?.numberPhone)}
             />  
-            <InfoRow 
+            {buildMode && <InfoRow 
               icon={<LocationIcon color='red'/>}
               label="¿Como llegar?"
               onClick={handleNavigationClick}
-            />              
+            />   }           
           </Grid>
           <Grid item xs={12} md={6}>
             
